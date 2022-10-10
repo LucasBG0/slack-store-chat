@@ -21,7 +21,7 @@ async def handle_requests(request: web.Request) -> web.Response:
     if 'text' in request.query:
         text = "\t".join(request.query.getall("text"))
     try:
-        await send_to_slack(channel="#random", text=text)
+        await send_to_slack(channel="#store-slack-test", text=text)
         return web.json_response(data={'message': 'Done!'})
     except SlackApiError as e:
         return web.json_response(data={'message': f"Failed due to {e.response['error']}"})
