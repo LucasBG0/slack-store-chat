@@ -1,4 +1,5 @@
 import os
+
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 
@@ -8,13 +9,10 @@ app = App(token=os.environ.get("SLACK_BOT_TOKEN"))
 # Listens to incoming messages that contain "hello"
 # To learn available listener arguments,
 # visit https://slack.dev/bolt-python/api-docs/slack_bolt/kwargs_injection/args.html
-@app.message("hello")
-def message_hello(say, body):
-    event = body["event"]
-    thread_ts = event.get("thread_ts", None) or event["ts"]
-    print(body)
-    say(text="Hello", thread_ts=thread_ts)
-
+@app.shortcut("save_message")
+def message_hello(ack, shortcut, client):
+    ack()
+    print(shortcut)
 
 # Start your app
 if __name__ == "__main__":
